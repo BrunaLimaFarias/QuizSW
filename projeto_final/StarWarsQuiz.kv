@@ -1,0 +1,84 @@
+#:kivy 1.0.9
+#:import CheckBox kivy.uix.checkbox.CheckBox
+
+
+<MenuScreen>:
+    orientation: 'vertical'
+    Label:
+        text: 'Menu Principal'
+    Button:
+        text: 'Cadastro de Planeta'
+        on_press: app.root.current = 'cadastro_planeta'
+    Button:
+        text: 'Quiz'
+        on_press: app.root.current = 'quiz'
+    Button:
+        text: 'Modelo 2D da Galáxia'
+        on_press: app.root.current = 'galaxia_2d'
+    Button:
+        text: 'Sair'
+        on_press: app.stop()
+
+<CadastroPlanetaScreen>:
+    orientation: 'vertical'
+    Label:
+        text: 'Tela de Cadastro de Planeta'
+    TextInput:
+        id: nome_planeta_input
+        hint_text: 'Digite o nome do planeta'
+    TextInput:
+        id: personagens_input
+        hint_text: 'Digite os personagens'
+    TextInput:
+        id: eventos_input
+        hint_text: 'Digite os eventos'
+    Button:
+        text: 'Cadastrar'
+        on_press: root.cadastrar_planeta()
+    Button:
+        text: 'Voltar para Menu'
+        on_press: app.root.current = 'menu'
+
+<Galaxia2DScreen>:
+    orientation: 'vertical'
+    Label:
+        text: 'Modelo 2D da Galáxia'
+        size_hint_y: None
+        height: 50
+    Galaxia2DWidget:
+        id: galaxia_2d_widget
+    Button:
+        text: 'Voltar para Menu'
+        on_press: app.root.current = 'menu'
+        size_hint_y: None
+        height: 50
+
+
+<QuizScreen>:
+    orientation: 'vertical'
+    Label:
+        text: 'Quiz Star Wars'
+        font_size: 30
+    Label:
+        text: root.quiz.get_current_question()["pergunta"]
+        font_size: 20
+    BoxLayout:
+        orientation: 'vertical'
+        CheckBox:
+            group: 'options'
+            text: root.option_a
+            on_active: root.check_answer('a')
+        CheckBox:
+            group: 'options'
+            text: root.option_b
+            on_active: root.check_answer('b')
+        CheckBox:
+            group: 'options'
+            text: root.option_c
+            on_active: root.check_answer('c')
+    Button:
+        text: 'Próxima Pergunta'
+        on_press: root.next_question()
+    Button:
+        text: 'Voltar para Menu'
+        on_press: app.root.current = 'menu'
